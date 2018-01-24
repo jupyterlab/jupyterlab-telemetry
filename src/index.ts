@@ -12,7 +12,10 @@ const extension: JupyterLabPlugin<void> = {
   id: 'jupyterlab-telemetry',
   autoStart: true,
   activate: (app: JupyterLab) => {
-    console.log('JupyterLab extension jupyterlab-telemetry is activated!');
+    const { commands } = app;
+    commands.commandExecuted.connect((registry, args) => {
+      console.log(args);
+    });
   }
 };
 
