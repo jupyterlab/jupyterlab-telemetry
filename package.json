@@ -1,0 +1,41 @@
+{
+  "name": "jupyterlab-telemetry",
+  "version": "0.1.0",
+  "description": "A JupyterLab extension for logging and telemetry of usage data",
+  "keywords": [
+    "extension",
+    "jupyter",
+    "jupyterlab"
+  ],
+  "homepage": "git@github.com:ian-r-rose/jupyterlab-telemetry.git",
+  "bugs": {
+    "url": "git@github.com:ian-r-rose/jupyterlab-telemetry.git/issues"
+  },
+  "license": "BSD-3-Clause",
+  "author": "Project Jupyter",
+  "files": [
+    "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
+    "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ian-r-rose/jupyterlab-telemetry.git.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf lib",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "@jupyterlab/application": "^0.15.0"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.1",
+    "typescript": "~2.6.0"
+  },
+  "jupyterlab": {
+    "extension": true
+  }
+}
