@@ -43,9 +43,7 @@ class TelemetryHandler {
    */
   save(telemetry: Telemetry.ISessionLog): Promise<void> {
     const { serverSettings } = this;
-    const { baseUrl, pageUrl } = serverSettings;
-    const base = baseUrl + pageUrl;
-    const url = URLExt.join(base, 'telemetry');
+    const url = URLExt.join(serverSettings.baseUrl, 'telemetry');
     const init = {
       body: JSON.stringify(telemetry),
       method: 'PUT'

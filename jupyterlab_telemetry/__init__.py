@@ -16,12 +16,8 @@ class TelemetryHandler(APIHandler):
     """
     @json_errors
     @gen.coroutine
-    def get(self, rest):
-        self.set_status(204)
-
-    @json_errors
-    @gen.coroutine
-    def put(self, rest):
+    @web.authenticated
+    def put(self, *args, **kwargs):
         # Parse the data from the request body
         raw = self.request.body.strip().decode(u'utf-8')
         try:
@@ -52,6 +48,5 @@ def load_jupyter_server_extension(nb_server_app):
     # Prepend the base_url so that it works in a jupyterhub setting
     base_url = web_app.settings['base_url']
     endpoint = url_path_join(base_url, 'telemetry')
-    web_app.log.error(endpoint)
-    handlers = [(endpoint + "(.*)", TelemetryHandler)]
+    handlers = [(endpoint + '(.*)', TelemetryHandler)]
     web_app.add_handlers('.*$', handlers)
