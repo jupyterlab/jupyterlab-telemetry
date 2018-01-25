@@ -10,10 +10,6 @@ import {
 } from '@jupyterlab/services';
 
 import {
-  CommandRegistry
-} from '@phosphor/commands';
-
-import {
   ReadonlyJSONObject
 } from '@phosphor/coreutils';
 
@@ -25,7 +21,7 @@ class TelemetryHandler {
   /**
    * Create a new telemetry handler.
    */
-  constructor(commands: CommandRegistry, options: TelemetryHandler.IOptions = { }) {
+  constructor(options: TelemetryHandler.IOptions = { }) {
     this.serverSettings = options.serverSettings ||
       ServerConnection.makeSettings();
   }
