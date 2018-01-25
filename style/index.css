@@ -1,0 +1,9 @@
+.jp-telemetry-icon {
+  background-size: 20px;
+  background-image: url(eye.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 20px;
+  margin-right: 2px;
+  margin-left: auto;
+}

@@ -10,6 +10,10 @@ import {
 } from '@jupyterlab/coreutils';
 
 import {
+  Widget
+} from '@phosphor/widgets';
+
+import {
   Telemetry, TelemetryHandler
 } from './handler';
 
@@ -30,6 +34,17 @@ const extension: JupyterLabPlugin<void> = {
     const id = uuid();
     // A log of executed commands.
     const commandLog: Telemetry.ICommandExecuted[] = [];
+
+    // Add a telemetry icon to the top bar.
+    // We do it after the app has been restored to place it
+    // at the right.
+    app.restored.then(() => {
+      const widget = new Widget();
+      widget.addClass('jp-telemetry-icon');
+      widget.id = 'telemetry:icon';
+      widget.node.title = 'Telemetry data is being collected';
+      app.shell.addToTopArea(widget);
+    });
 
     // When a command is executed, store it in the log.
     commands.commandExecuted.connect((registry, command) => {
