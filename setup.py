@@ -36,7 +36,8 @@ setup_dict = dict(
         'Programming Language :: Python :: 3',
     ],
     install_requires=[
-        'notebook'
+        'notebook',
+        'jupyterlab'
     ],
 )
 
