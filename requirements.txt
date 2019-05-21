@@ -1,0 +1,2 @@
+# JupyterHub with PR https://github.com/jupyterhub/jupyterhub/pull/2542
+git+https://github.com/yuvipanda/jupyterhub.git@d22e5cfa25ee430fca32b64a3a527723aa0c8fe4
