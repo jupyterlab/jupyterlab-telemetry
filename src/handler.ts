@@ -32,20 +32,26 @@ class TelemetryHandler {
   readonly serverSettings: ServerConnection.ISettings;
 
   /**
-   * Save telemetry data to the server.
+   * Emit an event to the server
    *
-   * @param id - The telemetry's ID.
+   * This may implement batching and other performance optimizations
+   * in the future.
    *
-   * @param telemetry - The telemetry being saved.
+   * @param event - The event being emitted
    *
    * @returns A promise that resolves when saving is complete or rejects with
    * a `ServerConnection.IError`.
    */
-  save(telemetry: Telemetry.ISessionLog): Promise<void> {
+  emit(event: Telemetry.ICommandInvocation): Promise<void> {
     const { serverSettings } = this;
-    const url = URLExt.join(serverSettings.baseUrl, 'telemetry');
+    const url = URLExt.join(serverSettings.baseUrl, 'eventlog');
+    const full_event = {
+      'schema': 'lab.jupyter.org/command-invocations',
+      'version': 1,
+      'event': event
+    }
     const init = {
-      body: JSON.stringify(telemetry),
+      body: JSON.stringify(full_event),
       method: 'PUT'
     };
     const promise = ServerConnection.makeRequest(url, init, serverSettings);
@@ -54,7 +60,6 @@ class TelemetryHandler {
       if (response.status !== 204) {
         throw new ServerConnection.ResponseError(response);
       }
-
       return undefined;
     });
   }
@@ -85,39 +90,25 @@ namespace TelemetryHandler {
 export
 namespace Telemetry {
   /**
-   * The interface describing a telemetry resource.
-   */
-  export
-  interface ISessionLog {
-    /**
-     * A unique identifier for the current session.
-     */
-    id: string;
-
-    /**
-     * A log of executed commands.
-     */
-    commands: ICommandExecuted[];
-  }
-
-  /**
    * An interface describing an executed command.
+   *
+   * FIXME: Automatically generate these from the schema?
    */
   export
-  interface ICommandExecuted {
+  interface ICommandInvocation {
+    /**
+     * UUID representing current session
+     */
+    readonly session_id: string;
+
     /**
      * The id of the command.
      */
-    readonly id: string;
+    readonly command_id: string;
 
     /**
      * The args of the command.
      */
-    readonly args: ReadonlyJSONObject;
-
-    /**
-     * The timestamp of the command.
-     */
-    readonly date: string;
+    readonly command_args: ReadonlyJSONObject;
   }
 }
