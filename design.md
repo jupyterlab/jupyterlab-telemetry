@@ -75,7 +75,7 @@ This document focuses primarily on *Events*, and doesn't talk much about metrics
 
 ## Stakeholders
 
-1. End ***Users
+1. End Users
 
    Primary stakeholder, since it is their data. They have a right
    to know what information is being collected about them. We should
@@ -104,7 +104,7 @@ This document focuses primarily on *Events*, and doesn't talk much about metrics
    not about policy enforcement around what should be kept and
    where it should be stored. We should also provide easy
    interfaces for them to emit information in various places
-   - backends, frontends, extensions, kernels, etc
+   (backends, frontends, extensions, kernels, etc)
 
 4. Analysts
 
@@ -245,9 +245,9 @@ inspiration from.
       and many many more. This should help integrate with whatever
       systems the organization is already using.
 
-  This helps us centralize all the processing around event validity,
-  PII handling and sink configuration. Organizations can then decide
-  what to do with the events afterwards.
+   This helps us centralize all the processing around event validity,
+   PII handling and sink configuration. Organizations can then decide
+   what to do with the events afterwards.
 
 3. *EventLogging REST API*
 
