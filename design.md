@@ -279,3 +279,21 @@ inspiration from.
    to turn it off. We could possibly let admins configure opt-in /
    opt-out options.
 
+## Open questions
+
+Here's a list of open questions.
+
+1. How to reference schemas in ways people can find them? Current
+   example points to URLs that don't exist, purely as a way to
+   namespace them. Perhaps we should have them point to URLs that
+   *do* exist?
+
+2. How do we signal strongly that telemetry / events are never sent
+   to the Jupyter project / 3rd party unless you explicitly configure
+   it to do so? This is a common meaning of the word 'telemetry'
+   today, so we need to make sure we communicate clearly what this
+   is, what this isn't, and what it can be used for. Same applies
+   to communicating that nothing is collected or emitted anywhere,
+   despite the possible presence of emission code in the codebase.
+
+3. Add yours here!
