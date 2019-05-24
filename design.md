@@ -1,5 +1,10 @@
 # EventLogging design
 
+This document supplements `implementations.md` and has sections detailing the
+the eventlogging design that can be common to various parts of the Jupyter
+ecosystem. These two documents will co-evolve - as we think more about
+implementation, the design will change, and vice versa.
+
 ## Why collect data?
 
 The primary reasons for collecting such data are:
@@ -264,13 +269,24 @@ inspiration from.
   By separating (2) and (3), we can cater to a variety of scales
   and use cases.
 
-4. *JavaScript API*
+4. *EventLogging JavaScript API*
 
-   This is a convenience JS library made available to all code to emit
-   events for a specific schema. The library could then validate them
-   client side (for easier debugging), and send them to the REST API.
-   It can also do clientside batching and other performance improvements
-   in one go.
+   This is the equivalent to (1), but in JavaScript.
+
+   It should receive configuration in a similar way as (1) and (2), but be
+   able to send them to various sinks *directly* instead of being forced to
+   go through (3). This is very useful in cases where events should be sent
+   directly to a pre-existing collection service - such as Google Analytics
+   or mixpanel. Those can be supported as various sinks that plug into this
+   API, so the code that is emitting the events can remain agnostic to where
+   they are being sent.
+
+   The default sink can be (3), but we should make sure we implement
+   at least 1 more sink to begin with so we don't overfit our API design.
+
+   We should be careful to make sure that these events still conform to
+   schemas, need to be explicitly turned on in configuration, and follow
+   all the other expectations we have around eventlogging data.
 
 5. *User consent / information UI*
 
