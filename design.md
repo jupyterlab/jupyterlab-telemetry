@@ -162,8 +162,8 @@ inspiration from.
 * Mozilla's Telemetry system
 
   Firefox runs on a lot of browsers, and has a lot of very privacy conscious
-  users & developers. Mozilla has a well thought out [data collection policy]
-  (https://wiki.mozilla.org/Firefox/Data_Collection). 
+  users & developers. Mozilla has a well thought out
+  [data collection policy](https://wiki.mozilla.org/Firefox/Data_Collection). 
   
   There is a [technical overview](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/start/adding-a-new-probe.html)
   of various capabilities available. Their [events](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html)
@@ -195,7 +195,7 @@ inspiration from.
 
 * Homebrew's analytics
 
-  The popular OS X package manager [homebrew](https://brew.sh]
+  The popular OS X package manager [homebrew](https://brew.sh)
   [collects information](https://github.com/Homebrew/brew/blob/master/docs/Analytics.md) about 
   usage with Google Analytics. This is very similar to the Debian Popularity
   contest system, except it sends events to a third party (Google Analytics)
@@ -288,12 +288,20 @@ inspiration from.
    schemas, need to be explicitly turned on in configuration, and follow
    all the other expectations we have around eventlogging data.
 
-5. *User consent / information UI*
+5. *User consent / information API and example UI*
 
    Every application collecting data should have a way to make it
    clear to the user what is being collected, and possibly ways
    to turn it off. We could possibly let admins configure opt-in /
-   opt-out options.
+   opt-out options. In some cases, we may wish to store consent information
+   separately from event data (this is commondly done in human subjects research),
+   so the API should use a separately configured store for this information.
+   
+   By providing an API with a reference UI, a consent process can be
+   integrated into a variety of views into Jupyter ecosystem products
+   (e.g., JupyterHub, JupyterLab, Binder) as well as "independent"
+   projects like Nteract, Stencila, or Gigantum, or even completely
+   distinct projects like Theia or RStudio.
 
 ## Open questions
 
@@ -311,5 +319,8 @@ Here's a list of open questions.
    is, what this isn't, and what it can be used for. Same applies
    to communicating that nothing is collected or emitted anywhere,
    despite the possible presence of emission code in the codebase.
+   
+ 3. What is the process for defining custom events? More broadly, what's 
+    the table of contents for the docs?
 
-3. Add yours here!
+1. Add yours here!
