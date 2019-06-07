@@ -86,7 +86,7 @@ Schema validation is done in the core telemetry framework that routes events fro
 ### Event Sinks
 
 Event sinks are the backends where events published to.  Event sinks can be configured from the browser as well as the server. Custom sinks can be implemented by extending the interface for the given Jupyter component. 
-See [Python interface](#Python_event_sink_interface) and the [JupyterLab interface](#Jupyterlab_event_sink_interface)
+See [Python interface](#python-event-sink-interface) and the [JupyterLab interface](#jupyterlab-event-sink-interface)
 
 ### Jupyter Server
 
@@ -153,14 +153,14 @@ def record_event(name, schema_version, args):
 
 #### REST Endpoint
 
-In addition to the above sub-components, a REST interface is exposed on the Jupyter server to allow remote clients and the frontend to publish events into the server. The interface for this is similar to the [Python publisher library](#Python_publisher_library)
+In addition to the above sub-components, a REST interface is exposed on the Jupyter server to allow remote clients and the frontend to publish events into the server. The interface for this is similar to the [Python publisher library](#python-publisher-library)
 
 ```json
 HTTP PUT /api/telemetry/event
 {
-    "name":"org.jupyter.kernel_lifecycle_event",
-    "schema_version:"1",
-    "args":{
+    "name" : "org.jupyter.kernel_lifecycle_event",
+    "schema_version : "1",
+    "args" : {
         "kernel_name": "python3",
         "state": "restarted"
     }
@@ -175,7 +175,7 @@ HTTP PUT /api/telemetry/event
 
 There are quite a few analytics frameworks that send events directly from the browser, so the round trip to the server can be avoided in certain deployments. Additionally, JupyterLab also publishes "platform" events which are subscribed to and published to the event sinks.
 
-All the sub-components defined in the [Jupyter server](#Jupyter_server) section are applicable here as well.
+All the sub-components defined in the [Jupyter server](#jupyter-server) section are applicable here as well.
 
 #### JupyterLab publisher library
 
@@ -195,7 +195,7 @@ recordEvent({
 
 #### JupyterLab Event Sink Interface
 
-An interface to expose to operators writing their own custom sink (as JupyterLab extensions themselves) and register themselves with the core routing components. The default event sink implementation is to publish to the [Server REST Endpoint](#REST_endpoint).
+An interface to expose to operators writing their own custom sink (as JupyterLab extensions themselves) and register themselves with the core routing components. The default event sink implementation is to publish to the [Server REST Endpoint](#rest-endpoint).
 
 ```typescript
 import {EventSink, EventData} from '@jupyterlab/telemetry'
@@ -235,7 +235,22 @@ Since JupyterLab is the user facing component, it also contains UX features to g
 
 ### Jupyter Classic
 
-(This section needs to be filled out)
+The proposal for Jupyter Classis is to have a convenience JS library that can be used to pubish events to the server [REST Endpoint](#rest-endpoint).
+This ensures that we provide support for Jupyter Classic but can rely on the Jupyter Server to do much of the heavy-lifting by relying on the Core Event Router, Event Sinks, and configuration done at the server level.
+
+```javascript
+
+var telemetry = require('jupyter-telemetry-js')
+
+telemetry.record_event(
+    name='org.jupyter.kernel_lifecycle_event',
+    schema_version='1',
+    args={
+        'kernel_name': 'python3',
+        'state': 'restarted'
+    }
+)
+```
 
 ### Data protection
 
