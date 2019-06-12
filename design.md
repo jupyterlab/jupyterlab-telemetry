@@ -294,14 +294,13 @@ inspiration from.
    clear to the user what is being collected, and possibly ways
    to turn it off. We could possibly let admins configure opt-in /
    opt-out options. In some cases, we may wish to store consent information
-   separately from event data (this is commondly done in human subjects research),
+   separately from event data (this is commonly done in human subjects research),
    so the API should use a separately configured store for this information.
    
-   By providing an API with a reference UI, a consent process can be
-   integrated into a variety of views into Jupyter ecosystem products
-   (e.g., JupyterHub, JupyterLab, Binder) as well as "independent"
-   projects like Nteract, Stencila, or Gigantum, or even completely
-   distinct projects like Theia or RStudio.
+   The "consent and information" API should provide a reference UI that can be
+   integrated with various Jupyter-related applications (e.g. JupyterHub, JupyterLab,
+   Binder, Nteract, Stencila, Gigantum, etc.) and non-Jupyter applications (e.g.
+   RStudio and Theia).
 
 ## Open questions
 
