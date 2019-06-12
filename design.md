@@ -319,7 +319,7 @@ Here's a list of open questions.
    to communicating that nothing is collected or emitted anywhere,
    despite the possible presence of emission code in the codebase.
    
- 3. What is the process for defining custom events? More broadly, what's 
-    the table of contents for the docs?
+3. What is the process for defining custom events? More broadly, what's 
+   the table of contents for the docs?
 
 1. Add yours here!
