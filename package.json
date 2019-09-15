@@ -1,7 +1,7 @@
 {
   "name": "@jupyterlab/jupyterlab-telemetry",
   "version": "0.1.0",
-  "description": "A JupyterLab extension for logging and telemetry of usage data",
+  "description": "A JupyterLab library for logging and telemetry of usage data",
   "keywords": [
     "jupyter",
     "jupyterlab",
@@ -32,9 +32,10 @@
   "dependencies": {
     "@jupyterlab/application": "^1.0.0",
     "@jupyterlab/apputils": "^1.0.0",
+    "@phosphor/coreutils": "1.3.1",
     "@phosphor/messaging": "^1.2.3",
-    "@phosphor/widgets": "^1.8.1",
-    "@phosphor/coreutils": "1.3.1"
+    "@phosphor/signaling": "^1.3.0",
+    "@phosphor/widgets": "^1.8.1"
   },
   "devDependencies": {
     "rimraf": "^2.6.1",
