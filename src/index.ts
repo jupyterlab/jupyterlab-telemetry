@@ -1,24 +1,12 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
-import {
-  JupyterFrontEnd, JupyterFrontEndPlugin
-} from '@jupyterlab/application';
-
-import {
-  Dialog, showDialog
-} from '@jupyterlab/apputils';
-
-import {
-  Widget
-} from '@phosphor/widgets';
-
-import {
-  Telemetry, TelemetryHandler
-} from './handler';
-
+import { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
+import { Dialog, showDialog } from '@jupyterlab/apputils';
+import { UUID } from '@phosphor/coreutils';
+import { Widget } from '@phosphor/widgets';
 import '../style/index.css';
-
+import { Telemetry, TelemetryHandler } from './handler';
 
 /**
  * Initialization data for the jupyterlab-telemetry extension.
@@ -29,7 +17,7 @@ const extension: JupyterFrontEndPlugin<void> = {
   activate: (app: JupyterFrontEnd) => {
     const { commands } = app;
     const handler = new TelemetryHandler();
-    const id = '123'
+    const id = UUID.uuid4()
     // A log of executed commands.
     const commandLog: Telemetry.ICommandExecuted[] = [];
 
