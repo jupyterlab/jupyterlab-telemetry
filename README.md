@@ -1,5 +1,7 @@
 # jupyterlab-telemetry
 
+[![Version](https://img.shields.io/npm/v/@jupyterlab/jupyterlab-telemetry.svg)](https://www.npmjs.com/package/@jupyterlab/jupyterlab-telemetry)
+
 A JupyterLab extension for logging and telemetry of usage data
 
 ## Prerequisites
@@ -9,7 +11,7 @@ A JupyterLab extension for logging and telemetry of usage data
 ## Installation
 
 ```bash
-jupyter labextension install jupyterlab-telemetry
+jupyter labextension install @jupyterlab/jupyterlab-telemetry
 ```
 
 ## Usage
