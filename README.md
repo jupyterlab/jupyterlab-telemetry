@@ -42,7 +42,7 @@ const el = new EventLog({
 });
 ```
 
-Send custom events via the `recordEvents` interface. If the `commandRegistry` instance was passed, then the `EventLog`  will subscribe to commands executed in the JuptyerLab application and send the whitelisted ones to each configured handler.
+Send custom events via the `recordEvents` interface. If the `commandRegistry` instance was passed, then the `EventLog`  will subscribe to commands executed in the JupyterLab application and send the whitelisted ones to each configured handler.
 
 ```typescript
 el.recordEvent({
