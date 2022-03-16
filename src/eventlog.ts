@@ -1,20 +1,25 @@
-import { Signal, Slot } from "@phosphor/signaling";
-import { CommandRegistry } from "@phosphor/commands";
-import { IDisposable } from "@phosphor/disposable";
+// Copyright (c) Jupyter Development Team.
+// Distributed under the terms of the Modified BSD License.
+
+import { CommandRegistry } from "@lumino/commands";
+import { IDisposable } from "@lumino/disposable";
+import { Signal, Slot } from "@lumino/signaling";
+
 
 /**
  * A configurable Event Log for publishing and receiving JupyterLab events.
  */
-export class EventLog implements IDisposable {
+ export class EventLog implements IDisposable {
     private readonly handlers: Slot<EventLog, EventLog.RecordedEvent[]>[];
     private readonly allowedSchemas: string[];
 
     private readonly _eventSignal: Signal<EventLog, EventLog.RecordedEvent[]>
     private readonly _commandLog: EventLog.RecordedEvent[]
     private _isDisposed: boolean;
-    private _saveInterval: number;
+    private _saveInterval: number | undefined;
 
     constructor(options: EventLog.IOptions) {
+        this._isDisposed = false;
         this.handlers = options.handlers;
         this.allowedSchemas = options.allowedSchemas
         this._eventSignal = new Signal(this)
@@ -45,7 +50,9 @@ export class EventLog implements IDisposable {
         if (this.isDisposed) {
             return;
         }
-        clearInterval(this._saveInterval);
+        if(this._saveInterval !== undefined){
+            clearInterval(this._saveInterval);
+        }
         Signal.clearData(this);
         this._isDisposed = true;
     }
@@ -58,7 +65,7 @@ export class EventLog implements IDisposable {
      * - Emit the event to the configured handlers.
      * @param event the event to record
      */
-    public recordEvent(event: EventLog.Event): Promise<void> {
+    async recordEvent(event: EventLog.Event) {
         if (!this.isSchemaWhitelisted(event.schema)) {
             return;
         }
@@ -95,7 +102,7 @@ export class EventLog implements IDisposable {
     * @param options the EventLog instantiation options.
     */
     private enableCommandEvents(options: EventLog.IOptions) {
-        options.commandRegistry.commandExecuted.connect((registry, command) => {
+        options.commandRegistry?.commandExecuted.connect((registry, command) => {
             const commandEventSchema = `org.jupyterlab.commands.${command.id}`;
             if (this.isSchemaWhitelisted(commandEventSchema)) {
                 this._commandLog.push({

@@ -1,18 +1,52 @@
-# jupyterlab-telemetry
+# jupyterlab_telemetry
 
-[![Version](https://img.shields.io/npm/v/@jupyterlab/jupyterlab-telemetry.svg)](https://www.npmjs.com/package/@jupyterlab/jupyterlab-telemetry)
+[![Github Actions Status](https://github.com/jupyterlab/jupyterlab-telemetry/workflows/Build/badge.svg)](https://github.com/jupyterlab/jupyterlab-telemetry/actions/workflows/build.yml)
 
-A JupyterLab extension for logging and telemetry of usage data
+A JupyterLab library for logging and telemetry of usage data
 
-## Prerequisites
 
-* JupyterLab 1.0+
+This extension is composed of a Python package named `jupyterlab_telemetry`
+for the server extension and a NPM package named `@jupyterlab/jupyterlab-telemetry`
+for the frontend extension.
 
-## Installation
+
+## Requirements
+
+* JupyterLab >= 3.0
+
+## Install
+
+To install the extension, execute:
 
 ```bash
-jupyter labextension install @jupyterlab/jupyterlab-telemetry
+pip install jupyterlab_telemetry
 ```
+
+## Uninstall
+
+To remove the extension, execute:
+
+```bash
+pip uninstall jupyterlab_telemetry
+```
+
+
+## Troubleshoot
+
+If you are seeing the frontend extension, but it is not working, check
+that the server extension is enabled:
+
+```bash
+jupyter server extension list
+```
+
+If the server extension is installed and enabled, but you are not seeing
+the frontend extension, check the frontend extension is installed:
+
+```bash
+jupyter labextension list
+```
+
 
 ## Usage
 
@@ -61,32 +95,58 @@ Dispose the event log after use
 el.dispose();
 ```
 
-## Development
+## Contributing
 
-For a development install, do the following in the repository directory:
+### Development install
 
-```bash
-yarn
-yarn build
-jupyter labextension install .
-```
+Note: You will need NodeJS to build the extension package.
 
-To rebuild the package and the JupyterLab app:
+The `jlpm` command is JupyterLab's pinned version of
+[yarn](https://yarnpkg.com/) that is installed with JupyterLab. You may use
+`yarn` or `npm` in lieu of `jlpm` below.
 
 ```bash
-yarn build
-jupyter lab build
+# Clone the repo to your local environment
+# Change directory to the jupyterlab_telemetry directory
+# Install package in development mode
+pip install -e .
+# Link your development version of the extension with JupyterLab
+jupyter labextension develop . --overwrite
+# Server extension must be manually installed in develop mode
+jupyter server extension enable jupyterlab_telemetry
+# Rebuild extension Typescript source after making changes
+jlpm build
 ```
 
-To auto-build the package and JupyterLab on any change:
+You can watch the source directory and run JupyterLab at the same time in different terminals to watch for changes in the extension's source and automatically rebuild the extension.
 
 ```bash
-
-# In one terminal
-yarn watch
-
-# In second terminal
-
-jupyter lab --watch
-
+# Watch the source directory in one terminal, automatically rebuilding when needed
+jlpm watch
+# Run JupyterLab in another terminal
+jupyter lab
 ```
+
+With the watch command running, every saved change will immediately be built locally and available in your running JupyterLab. Refresh JupyterLab to load the change in your browser (you may need to wait several seconds for the extension to be rebuilt).
+
+By default, the `jlpm build` command generates the source maps for this extension to make it easier to debug using the browser dev tools. To also generate source maps for the JupyterLab core extensions, you can run the following command:
+
+```bash
+jupyter lab build --minimize=False
+```
+
+### Development uninstall
+
+```bash
+# Server extension must be manually disabled in develop mode
+jupyter server extension disable jupyterlab_telemetry
+pip uninstall jupyterlab_telemetry
+```
+
+In development mode, you will also need to remove the symlink created by `jupyter labextension develop`
+command. To find its location, you can run `jupyter labextension list` to figure out where the `labextensions`
+folder is located. Then you can remove the symlink named `jupyterlab-telemetry` within that folder.
+
+### Packaging the extension
+
+See [RELEASE](RELEASE.md)

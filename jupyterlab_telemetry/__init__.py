@@ -1,52 +1,44 @@
-""" JupyterLab LaTex : live Telemetry editing for JupyterLab """
-
 import json
-
-from tornado import gen, web
-
-from notebook.utils import url_path_join
-from notebook.base.handlers import APIHandler, json_errors
+from pathlib import Path
 
 from ._version import __version__
-
-
-class TelemetryHandler(APIHandler):
-    """
-    A handler that receives and stores telemetry data from the client.
-    """
-    @json_errors
-    @gen.coroutine
-    @web.authenticated
-    def put(self, *args, **kwargs):
-        # Parse the data from the request body
-        raw = self.request.body.strip().decode(u'utf-8')
-        try:
-            decoder = json.JSONDecoder()
-            session_log = decoder.decode(raw)
-        except Exception as e:
-            raise web.HTTPError(400, str(e))
-
-        self.log.info(session_log)
-        self.set_status(204)
-        self.finish()
+from .handlers import setup_handlers
 
 
 
-def _jupyter_server_extension_paths():
+HERE = Path(__file__).parent.resolve()
+
+
+with (HERE / "labextension" / "package.json").open() as fid:
+    data = json.load(fid)
+
+
+def _jupyter_labextension_paths():
     return [{
-        'module': 'jupyterlab_telemetry'
+        "src": "labextension",
+        "dest": data["name"]
     }]
 
-def load_jupyter_server_extension(nb_server_app):
-    """
-    Called when the extension is loaded.
 
-    Args:
-        nb_server_app (NotebookWebApplication): handle to the Notebook webserver instance.
+
+def _jupyter_server_extension_points():
+    return [{
+        "module": "jupyterlab_telemetry"
+    }]
+
+
+def _load_jupyter_server_extension(server_app):
+    """Registers the API handler to receive HTTP requests from the frontend extension.
+
+    Parameters
+    ----------
+    server_app: jupyterlab.labapp.LabApp
+        JupyterLab application instance
     """
-    web_app = nb_server_app.web_app
-    # Prepend the base_url so that it works in a jupyterhub setting
-    base_url = web_app.settings['base_url']
-    endpoint = url_path_join(base_url, 'telemetry')
-    handlers = [(endpoint + '(.*)', TelemetryHandler)]
-    web_app.add_handlers('.*$', handlers)
+    setup_handlers(server_app.web_app)
+    server_app.log.info("Registered {name} server extension".format(**data))
+
+
+# For backward compatibility with notebook server - useful for Binder/JupyterHub
+load_jupyter_server_extension = _load_jupyter_server_extension
+
