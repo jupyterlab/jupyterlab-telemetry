@@ -9,30 +9,30 @@ implementation, the design will change, and vice versa.
 
 The primary reasons for collecting such data are:
 
-1. Better understanding of *usage* of their infrastructure. This 
+1. Better understanding of _usage_ of their infrastructure. This
    might be for capacity planning, metrics, billing, etc
 
-2. *Auditing* requirements - for security or legal reasons. Our
+2. _Auditing_ requirements - for security or legal reasons. Our
    Telemetry work in the Jupyter project is necessary but not
    sufficient for this, since it might have more stringent
    requirements around secure provenance & anti-tampering.
 
-4. UX / UI Events from end user behavior. This is often
+3. UX / UI Events from end user behavior. This is often
    targeted measurements to help UX designers / developers
    determine if particular UX decisions are meeting their
    goals.
 
-3. *Operational* metrics. Prometheus metrics should be used for
+4. _Operational_ metrics. Prometheus metrics should be used for
    most operational metrics (error rates, percentiles of server
    or kernel start times, memory usage, etc). However, some
-   operational data is much more useful when lossless than 
+   operational data is much more useful when lossless than
    when sampled, such as server start times or contentmanager
    usage.
 
 ## Metrics vs Events
 
 Both Metrics and Events are telemetry, but are fundamentally
-different. Katy Farmer [explains it](https://thenewstack.io/what-is-the-difference-between-metrics-and-events/) 
+different. Katy Farmer [explains it](https://thenewstack.io/what-is-the-difference-between-metrics-and-events/)
 thus:
 
 > I want to keep track of my piggy bank closely. Right now, there’s only one
@@ -76,7 +76,7 @@ pipeline](https://github.com/jupyterhub/mybinder.org-deploy/tree/master/images/a
 that cleans these events and publishes them at [archive.analytics.mybinder.org](https://github.com/jupyterhub/mybinder.org-deploy/tree/master/images/analytics-publisher)
 for the world to see.
 
-This document focuses primarily on *Events*, and doesn't talk much about metrics.
+This document focuses primarily on _Events_, and doesn't talk much about metrics.
 
 ## Stakeholders
 
@@ -94,10 +94,10 @@ This document focuses primarily on *Events*, and doesn't talk much about metrics
    They have to:
 
    a. Explicitly decide what kinds of Events at what level they are going to
-      be collecting and storing
+   be collecting and storing
 
    b. Configure where these Events needs to go. It should be very
-      easy for them to integrate this with the rest of their infrastructure.
+   easy for them to integrate this with the rest of their infrastructure.
 
    By default, we should not store any Events unless an operator
    explicitly opts into it.
@@ -127,7 +127,7 @@ system that is easy to use, transparent and privacy preserving
 by default. Here are some examples of prior art we can draw
 inspiration from.
 
-* Wikimedia's [EventLogging](https://www.mediawiki.org/wiki/Extension:EventLogging/Guide)
+- Wikimedia's [EventLogging](https://www.mediawiki.org/wiki/Extension:EventLogging/Guide)
 
   A simple and versatile system that can scale from the needs
   of a small organization running MediaWiki to the 7th largest
@@ -143,28 +143,28 @@ inspiration from.
   documents events collected about account creation events.
   This is very useful for a variety of stakeholders.
 
-    1. Users can see what information is being collected about
-       them if they wish.
+  1. Users can see what information is being collected about
+     them if they wish.
 
-    2. Analysts know exactly what each field in their dataset means
+  2. Analysts know exactly what each field in their dataset means
 
-    3. Operators can use this to perform automatic data purging,
-       anonymizing or other retention policies easily. See
-       how [wikimedia does it](https://wikitech.wikimedia.org/wiki/Analytics/Systems/EventLogging/Data_retention_and_auto-purging),
-       to be compliant with GDPR and friends.
+  3. Operators can use this to perform automatic data purging,
+     anonymizing or other retention policies easily. See
+     how [wikimedia does it](https://wikitech.wikimedia.org/wiki/Analytics/Systems/EventLogging/Data_retention_and_auto-purging),
+     to be compliant with GDPR and friends.
 
-    4. Developers can easily log events that conform to the schema
-       with standardized libraries that are provided for them,
-       without having to worry about policy around recording and
-       retention. See some [sample code](https://www.mediawiki.org/wiki/Extension:EventLogging/Guide#Underlying_technology)
-       to get a feel for how it is.
+  4. Developers can easily log events that conform to the schema
+     with standardized libraries that are provided for them,
+     without having to worry about policy around recording and
+     retention. See some [sample code](https://www.mediawiki.org/wiki/Extension:EventLogging/Guide#Underlying_technology)
+     to get a feel for how it is.
 
-* Mozilla's Telemetry system
+- Mozilla's Telemetry system
 
   Firefox runs on a lot of browsers, and has a lot of very privacy conscious
   users & developers. Mozilla has a well thought out [data collection policy]
-  (https://wiki.mozilla.org/Firefox/Data_Collection). 
-  
+  (https://wiki.mozilla.org/Firefox/Data_Collection).
+
   There is a [technical overview](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/start/adding-a-new-probe.html)
   of various capabilities available. Their [events](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html)
   system is most similar to what we want here. Similar to the wikimedia example,
@@ -176,13 +176,13 @@ inspiration from.
   There is a lot more information in their [telemetry data portal](https://docs.telemetry.mozilla.org/),
   particularly around how analysts can work with this data.
 
-* Debian 'popularity contest'
+- Debian 'popularity contest'
 
   The debian project has an opt-in way to try map the popularity of
   various packages used in end user systems with the [popularity
   contest](https://popcon.debian.org/). It is a purely opt-in system,
   and records packages installed in the system and the frequency
-  of their use. This is [sortof anonymously, sortof securely](https://popcon.debian.org/FAQ) 
+  of their use. This is [sortof anonymously, sortof securely](https://popcon.debian.org/FAQ)
   sent to a centralized server, which then produces useful graphs.
   [Ubuntu](https://popcon.ubuntu.com/) and [NeuroDebian](http://neuro.debian.net/popcon/)
   run versions of this as well for their own packages.
@@ -193,28 +193,28 @@ inspiration from.
   need to work across a large swath of the ecosystem - such as
   package usage metrics - but is of limited use in Jupyter itself.
 
-* Homebrew's analytics
+- Homebrew's analytics
 
   The popular OS X package manager [homebrew](https://brew.sh]
-  [collects information](https://github.com/Homebrew/brew/blob/master/docs/Analytics.md) about 
+  [collects information](https://github.com/Homebrew/brew/blob/master/docs/Analytics.md) about
   usage with Google Analytics. This is very similar to the Debian Popularity
   contest system, except it sends events to a third party (Google Analytics)
   instead. You can opt out of it if you wish.
 
-* Bloomberg?
+- Bloomberg?
 
   Paul Ivanov mentioned that Bloomberg has their own data collection
   system around JupyterLab. Would be great to hear more details of that
   here.
 
-* Other organizations
+- Other organizations
 
   Everyone operating at scale has some way of doing this kind of analytics
   pipeline. Would be great to add more info here!
 
 ## Design proposal
 
-1. *Schema*
+1. _Schema_
 
    Each event type needs a [JSON Schema](https://json-schema.org/) associated
    with this. This schema is versioned to allow analysts, operators
@@ -224,7 +224,7 @@ inspiration from.
    to mark specific fields as PII, which can then be automatically mangled,
    anonymized or dropped.
 
-2. *EventLogging Python API*
+2. _EventLogging Python API_
 
    A simple python API that lets users in serverside code (JupyterHub,
    Notebook Server, Kernel, etc) emit events. This will:
@@ -235,10 +235,10 @@ inspiration from.
       dropped, and immediately drop it if so. So nothing leaves the
       process unless explicitly configured to do so.
    3. Filter / obfuscate / drop PII if configured so.
-   3. Wrap the event in an *event capsule* with common information
+   4. Wrap the event in an _event capsule_ with common information
       for all events - timestamp (of sufficient granularity),
       schema reference, origin, etc.
-   4. Emit the event to a given 'sink'. We should leverage the 
+   5. Emit the event to a given 'sink'. We should leverage the
       ecosystem built around Python Loggers for this, so we can
       send events to a wide variety of sources - [files](https://docs.python.org/3/library/logging.handlers.html#filehandler),
       [files with automatic rotation](https://docs.python.org/3/library/logging.handlers.html#rotatingfilehandler),
@@ -254,7 +254,7 @@ inspiration from.
    PII handling and sink configuration. Organizations can then decide
    what to do with the events afterwards.
 
-3. *EventLogging REST API*
+3. _EventLogging REST API_
 
    This is a HTTP Endpoint to the Python API, and is a way for frontend
    JavaScript and other remote clients to emit events. This is an HTTP
@@ -266,15 +266,15 @@ inspiration from.
       someplace.
    3. A standalone service, that can be sent events from everywhere.
 
-  By separating (2) and (3), we can cater to a variety of scales
-  and use cases.
+By separating (2) and (3), we can cater to a variety of scales
+and use cases.
 
-4. *EventLogging JavaScript API*
+4. _EventLogging JavaScript API_
 
    This is the equivalent to (1), but in JavaScript.
 
    It should receive configuration in a similar way as (1) and (2), but be
-   able to send them to various sinks *directly* instead of being forced to
+   able to send them to various sinks _directly_ instead of being forced to
    go through (3). This is very useful in cases where events should be sent
    directly to a pre-existing collection service - such as Google Analytics
    or mixpanel. Those can be supported as various sinks that plug into this
@@ -288,7 +288,7 @@ inspiration from.
    schemas, need to be explicitly turned on in configuration, and follow
    all the other expectations we have around eventlogging data.
 
-5. *User consent / information UI*
+5. _User consent / information UI_
 
    Every application collecting data should have a way to make it
    clear to the user what is being collected, and possibly ways
@@ -302,7 +302,7 @@ Here's a list of open questions.
 1. How to reference schemas in ways people can find them? Current
    example points to URLs that don't exist, purely as a way to
    namespace them. Perhaps we should have them point to URLs that
-   *do* exist?
+   _do_ exist?
 
 2. How do we signal strongly that telemetry / events are never sent
    to the Jupyter project / 3rd party unless you explicitly configure

@@ -4,15 +4,13 @@
 
 A JupyterLab library for logging and telemetry of usage data
 
-
 This extension is composed of a Python package named `jupyterlab_telemetry`
 for the server extension and a NPM package named `@jupyterlab/jupyterlab-telemetry`
 for the frontend extension.
 
-
 ## Requirements
 
-* JupyterLab >= 3.0
+- JupyterLab >= 3.0
 
 ## Install
 
@@ -30,7 +28,6 @@ To remove the extension, execute:
 pip uninstall jupyterlab_telemetry
 ```
 
-
 ## Troubleshoot
 
 If you are seeing the frontend extension, but it is not working, check
@@ -47,46 +44,46 @@ the frontend extension, check the frontend extension is installed:
 jupyter labextension list
 ```
 
-
 ## Usage
 
 Define handlers that can receive events from the `EventLog`
 
 ```typescript
-import { EventLog } from "@jupyterlab/jupyterlab-telemetry";
+import { EventLog } from '@jupyterlab/jupyterlab-telemetry';
 
 function consoleHandler(el: EventLog, events: EventLog.RecordedEvent[]) {
-  console.log(`[Handler1] Received events ${JSON.stringify(events)}`)
+  console.log(`[Handler1] Received events ${JSON.stringify(events)}`);
 }
 
 function consoleHandler2(el: EventLog, events: EventLog.RecordedEvent[]) {
-  console.log(`[Handler2] Received events ${JSON.stringify(events)}`)
+  console.log(`[Handler2] Received events ${JSON.stringify(events)}`);
 }
 ```
 
 Create an instance of the EventLog and configure the handler and other options from `EventLog.IOptions`
 
 ```typescript
-
 const el = new EventLog({
   handlers: [consoleHandler, consoleHandler2],
-  allowedSchemas: ['org.jupyter.foo', 'org.jupyterlab.commands.docmanager:open'],
+  allowedSchemas: [
+    'org.jupyter.foo',
+    'org.jupyterlab.commands.docmanager:open'
+  ],
   commandRegistry: app.commands,
   commandEmitIntervalSeconds: 2
 });
 ```
 
-Send custom events via the `recordEvents` interface. If the `commandRegistry` instance was passed, then the `EventLog`  will subscribe to commands executed in the JupyterLab application and send the whitelisted ones to each configured handler.
+Send custom events via the `recordEvents` interface. If the `commandRegistry` instance was passed, then the `EventLog` will subscribe to commands executed in the JupyterLab application and send the whitelisted ones to each configured handler.
 
 ```typescript
 el.recordEvent({
   schema: 'org.jupyter.foo',
   version: 1,
   body: {
-    'foo': 'bar'
+    foo: 'bar'
   }
 });
-
 ```
 
 Dispose the event log after use

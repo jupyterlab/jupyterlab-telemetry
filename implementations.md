@@ -7,7 +7,7 @@ will change, and vice versa.
 
 ## JupyterLab
 
-A *lot* of user actions happen here, so a well thought out extensible mechanism
+A _lot_ of user actions happen here, so a well thought out extensible mechanism
 is extremely important.
 
 Some parts of this might be:
