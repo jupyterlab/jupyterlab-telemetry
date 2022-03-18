@@ -58,6 +58,9 @@ setup_args = dict(
     install_requires=[
         "jupyter_server>=1.6,<2"
     ],
+    extras_require={
+        "test": ["pytest", "pytest-tornasync"]
+    },
     zip_safe=False,
     include_package_data=True,
     python_requires=">=3.7",
