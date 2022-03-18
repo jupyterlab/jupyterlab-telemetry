@@ -16,7 +16,7 @@ class TelemetryHandler(APIHandler):
             decoder = json.JSONDecoder()
             session_log = decoder.decode(raw)
         except Exception as e:
-            raise web.HTTPError(400, str(e))
+            raise tornado.web.HTTPError(400, str(e))
 
         self.log.info(session_log)
         self.set_status(204)
