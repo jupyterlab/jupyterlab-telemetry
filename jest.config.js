@@ -13,7 +13,7 @@ const {
 } = jlabConfig;
 
 module.exports = {
-  coverageDirectory: "coverage",
+  coverageDirectory: 'coverage',
   moduleFileExtensions,
   moduleNameMapper,
   preset,
@@ -25,9 +25,9 @@ module.exports = {
   collectCoverageFrom: ['src/**.ts', '!src/*.d.ts'],
   coverageReporters: ['lcov', 'text'],
   globals: {
-      'ts-jest': {
-          tsconfig: `./tsconfig.json`
-      }
+    'ts-jest': {
+      tsconfig: `./tsconfig.json`
+    }
   },
   reporters: ['default'],
   testRegex: 'src/.*/.*.spec.ts$',
