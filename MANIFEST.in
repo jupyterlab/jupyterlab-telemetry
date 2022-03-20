@@ -1,6 +1,8 @@
 include LICENSE
 include *.md
 include pyproject.toml
+include conftest.py
+include jest.config.js
 recursive-include jupyter-config *.json
 
 include package.json
