@@ -195,7 +195,7 @@ inspiration from.
 
 - Homebrew's analytics
 
-  The popular OS X package manager [homebrew](https://brew.sh]
+  The popular OS X package manager [homebrew](https://brew.sh)
   [collects information](https://github.com/Homebrew/brew/blob/master/docs/Analytics.md) about
   usage with Google Analytics. This is very similar to the Debian Popularity
   contest system, except it sends events to a third party (Google Analytics)
