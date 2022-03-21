@@ -1,11 +1,10 @@
 {
   "name": "@jupyterlab/jupyterlab-telemetry",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A JupyterLab library for logging and telemetry of usage data",
   "keywords": [
     "jupyter",
-    "jupyterlab",
-    "jupyterlab-extension"
+    "jupyterlab"
   ],
   "homepage": "https://github.com/jupyterlab/jupyterlab-telemetry",
   "bugs": {
@@ -26,31 +25,25 @@
     "url": "https://github.com/jupyterlab/jupyterlab-telemetry"
   },
   "scripts": {
-    "build": "jlpm build:lib && jlpm build:labextension:dev",
-    "build:prod": "jlpm clean && jlpm build:lib && jlpm build:labextension",
-    "build:labextension": "jupyter labextension build .",
-    "build:labextension:dev": "jupyter labextension build --development True .",
+    "build": "jlpm build:lib",
+    "build:prod": "jlpm clean && jlpm build:lib",
     "build:lib": "tsc",
     "clean": "jlpm clean:lib",
     "clean:lib": "rimraf lib tsconfig.tsbuildinfo",
     "clean:lintcache": "rimraf .eslintcache .stylelintcache",
-    "clean:labextension": "rimraf jupyterlab_telemetry/labextension",
-    "clean:all": "jlpm clean:lib && jlpm clean:labextension && jlpm clean:lintcache",
+    "clean:all": "jlpm clean:lib && jlpm clean:lintcache",
     "eslint": "jlpm eslint:check --fix",
     "eslint:check": "eslint . --cache --ext .ts,.tsx",
-    "install:extension": "jlpm build",
     "lint": "jlpm prettier && jlpm eslint",
     "lint:check": "jlpm prettier:check && jlpm eslint:check",
     "prettier": "jlpm prettier:base --write --list-different",
     "prettier:base": "prettier \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",
     "prettier:check": "jlpm prettier:base --check",
-    "watch": "run-p watch:src watch:labextension",
+    "watch": "run-p watch:src",
     "watch:src": "tsc -w",
-    "watch:labextension": "jupyter labextension watch .",
     "test": "jest --coverage"
   },
   "dependencies": {
-    "@jupyterlab/application": "^3.1.0",
     "@jupyterlab/coreutils": "^5.1.0",
     "@jupyterlab/services": "^6.1.0",
     "@lumino/coreutils": "^1.5.3",
@@ -59,7 +52,6 @@
     "@lumino/commands": "^1.12.0"
   },
   "devDependencies": {
-    "@jupyterlab/builder": "^3.1.0",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
     "eslint": "^7.14.0",
@@ -88,9 +80,7 @@
             "name": "jupyterlab_telemetry"
           }
         }
-    },
-    "extension": true,
-    "outputDir": "jupyterlab_telemetry/labextension"
+    }
   },
   "jupyter-releaser": {
     "hooks": {

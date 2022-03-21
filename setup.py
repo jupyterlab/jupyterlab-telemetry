@@ -15,18 +15,9 @@ pkg_json = json.loads((HERE / "package.json").read_bytes())
 # The name of the project
 name = "jupyterlab_telemetry"
 
-lab_path = (HERE / pkg_json["jupyterlab"]["outputDir"])
-
-# Representative files that should exist after a successful build
-ensured_targets = [
-    str(lab_path / "package.json")
-]
-
 labext_name = pkg_json["name"]
 
 data_files_spec = [
-    ("share/jupyter/labextensions/%s" % labext_name, str(lab_path.relative_to(HERE)), "**"),
-    ("share/jupyter/labextensions/%s" % labext_name, str("."), "install.json"),
     ("etc/jupyter/jupyter_server_config.d",
      "jupyter-config/server-config", "jupyterlab_telemetry.json"),
     # For backward compatibility with notebook server
@@ -41,7 +32,8 @@ version = (
     .replace("-alpha.", "a")
     .replace("-beta.", "b")
     .replace("-rc.", "rc")
-) 
+)
+
 
 setup_args = dict(
     name=name,
@@ -84,14 +76,8 @@ setup_args = dict(
 
 try:
     from jupyter_packaging import (
-        wrap_installers,
-        npm_builder,
         get_data_files
     )
-    post_develop = npm_builder(
-        build_cmd="install:extension", source_dir="src", build_dir=lab_path
-    )
-    setup_args["cmdclass"] = wrap_installers(post_develop=post_develop, ensured_targets=ensured_targets)
     setup_args["data_files"] = get_data_files(data_files_spec)
 except ImportError as e:
     import logging
