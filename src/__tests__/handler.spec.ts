@@ -1,5 +1,5 @@
 import { ServerConnection } from '@jupyterlab/services';
-import { TelemetryHandler } from '../handler';
+import { TelemetryHandler } from '../index';
 
 const requestCollector = jest.fn();
 

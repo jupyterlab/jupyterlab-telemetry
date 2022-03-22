@@ -66,7 +66,7 @@ export class EventLog implements IDisposable {
    * - Emit the event to the configured handlers.
    * @param event the event to record
    */
-  async recordEvent(event: EventLog.IEvent) {
+  async recordEvent(event: EventLog.IEvent): Promise<void> {
     if (!this.isSchemaWhitelisted(event.schema)) {
       return;
     }

@@ -1,21 +1,24 @@
 include LICENSE
 include *.md
 include pyproject.toml
+include conftest.py
 recursive-include jupyter-config *.json
 
 include package.json
 include install.json
-include ts*.json
-include yarn.lock
-
-graft jupyterlab_telemetry/labextension
 
 # Javascript files
-graft src
-graft style
 prune **/node_modules
 prune lib
 prune binder
+prune src
+exclude tsconfig.json
+exclude yarn.lock
+exclude .eslintignore
+exclude .eslintrc.js
+exclude .prettierignore
+exclude .prettierrc
+exclude jest.config.js
 
 # Patterns to exclude from any directory
 global-exclude *~
