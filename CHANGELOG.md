@@ -4,7 +4,7 @@
 
 ## 1.0.2
 
-([Full Changelog](https://github.com/jupyterlab/jupyterlab-telemetry/compare/be69b652192d5dc25bb30a9455b3e0685f7773c8...15ef01e0b9c72fdb5c1d7b02638342814f20a55d))
+([Full Changelog](https://github.com/jupyterlab/jupyterlab-telemetry/compare/3c1b81e3591f18326a653410f2a59bb5f6d7546d...15ef01e0b9c72fdb5c1d7b02638342814f20a55d))
 
 ### Merged PRs
 
